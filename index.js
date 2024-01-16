@@ -1,13 +1,17 @@
+require('dotenv').config();
+const emails = require('./emails');
 const express = require('express');
+const busboy = require('express-busboy');
+
 const app = express();
-const port = 5050;
+busboy.extend(app); // for parsing form-data into req.body
 
-function handleRoot(req, res) {
-  res.send('Hello, world!');
-}
+const port = process.env.SERVER_PORT;
 
-app.get('/', handleRoot);
+emails.configureRoutes(app);
+
+app.use('/examples', express.static('examples'));
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}.`);
-})
+});
