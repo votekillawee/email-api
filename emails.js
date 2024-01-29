@@ -15,7 +15,7 @@ const emailRegExp = new RegExp(
 
 async function handleSubmit(req, res) {
   try {
-    if (!req.body.email.match(emailRegExp))
+    if (!String(req.body.email).match(emailRegExp))
       throw new Error(`Invalid email: ${req.body.email}`);
 
     await sql`
